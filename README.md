@@ -1,18 +1,21 @@
 # Overview
 This is a small project for Competency-Test as a Data Engineer Position.
 
-#Goal
+# Goal
 Development of WebCrawler using Scrapy Library
 
-#Language
+# Language
 Python
 
-#Development Environment
+# Development Environment
 - OS : Mac
 - Python ver3.4
-- MongoDB ver3.2.3
+- MongoDB ver3.2.3 (for local test)
 - AWS (optional)
 
+# Library
+- Scrapy (http://scrapy.org/)
+- pymongo
 
 # Intructions
 
