@@ -14,6 +14,12 @@ BOT_NAME = 'webCrawler'
 SPIDER_MODULES = ['webCrawler.spiders']
 NEWSPIDER_MODULE = 'webCrawler.spiders'
 
+ITEM_PIPELINES = ['webCrawler.pipelines.MongoDBPipeline', ]
+
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "test3"
+MONGODB_COLLECTION = "news"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'webCrawler (+http://www.yourdomain.com)'
