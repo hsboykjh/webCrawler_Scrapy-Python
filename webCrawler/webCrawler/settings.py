@@ -14,10 +14,20 @@ BOT_NAME = 'webCrawler'
 SPIDER_MODULES = ['webCrawler.spiders']
 NEWSPIDER_MODULE = 'webCrawler.spiders'
 
+#Item Piplines
 ITEM_PIPELINES = ['webCrawler.pipelines.MongoDBPipeline', ]
 
-MONGODB_SERVER = "localhost"
-MONGODB_PORT = 27017
+#MongDB ENV
+#Localhost
+#MONGODB_SERVER = "localhost"
+#MONGODB_PORT = 27017
+
+#Composeio : mongodb://<user>:<password>@aws-us-east-1-portal.14.dblayer.com:10095
+MONGODB_URL = "@aws-us-east-1-portal.14.dblayer.com"
+MONGODB_PORT = 10095
+MONGODB_USER = "hsboykjh"
+MONGODB_PASS = "kjh3131"
+MONGODB_SERVER = "mongodb://"+MONGODB_USER+MONGODB_PASS+MONGODB_URL
 MONGODB_DB = "test3"
 MONGODB_COLLECTION = "news"
 

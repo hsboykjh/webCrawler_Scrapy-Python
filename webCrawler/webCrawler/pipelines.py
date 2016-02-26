@@ -25,8 +25,12 @@ class MongoDBPipeline(object):
     
     def __init__(self):
         connection = pymongo.MongoClient(
-            settings['MONGODB_SERVER'],
-            settings['MONGODB_PORT']
+                                         #define MONGODB ENV (MONGODB_SERVER,MONGODB_PORT,MONGODB_DB,MONGODB_COLLECTION)  at setting.py
+                                         #Currntly Local MongoDB set for basic test
+                                         #settings['MONGODB_SERVER'],
+                                         #settings['MONGODB_PORT']
+                                         "mongodb://hsboykjh:kjh3131@aws-us-east-1-portal.14.dblayer.com", 10095
+                                         #/admin -u hsboykjh -p kjh3131"
         )
             
         db = connection[settings['MONGODB_DB']]
@@ -34,6 +38,7 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         
+        # insert item into MongoDB
         self.collection.insert({'keyword' : item['keyword'] , 'headline' : item['headline'] , 'article_url' : item['article_url'] , 'article_text' : item['article_text']})
 
         #logging.info("PIPELINES ITEM info : %s || %s || %s || %s" , item['article_url'],item['article_text'],item['keyword'],item['headline'])
