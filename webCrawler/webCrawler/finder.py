@@ -1,36 +1,36 @@
 # -*- coding: utf-8 -*-
-
-# initial application
 import pymongo
+import logging
+import sys
+from scrapy.conf import settings
 
-# MongoDB init
-# connect MongoDB (local or server)
-# id/passwd for (Compose)access was defined at setting.py
-# MONGODB_SERVER is composed of userID/password and serviceURL at setting.py
-#logging.info("MONGODB_SERVER info : %s ",settings['MONGODB_SERVER'])
+# See: Scrapy MongoDB reference http://doc.scrapy.org/en/latest/topics/item-pipeline.html?highlight=mongodb
 
-connection = pymongo.MongoClient("mongodb://hsboykjh:kjh3131@aws-us-east-1-portal.14.dblayer.com", 10095)
+class finder(object):
+    
+    def __init__(self):
+        # connect MongoDB (local or server)
+        # id/passwd for (Compose)access was defined at setting.py
+        # MONGODB_SERVER is composed of userID/password and serviceURL at setting.py
+        logging.info("MONGODB_SERVER info : %s ",settings['MONGODB_SERVER'])
+        connection = pymongo.MongoClient(
+                                         #define MONGODB ENV (MONGODB_SERVER,MONGODB_PORT,MONGODB_DB,MONGODB_COLLECTION)  at setting.py
+                                         #Currntly Local MongoDB set for basic test
+                                         settings['MONGODB_SERVER'],
+                                         settings['MONGODB_PORT']
+                                         )
+            
+        db = connection[settings['MONGODB_DB']]
+        self.collection = db[settings['MONGODB_COLLECTION']]
 
-db = connection["test3"]
-collection = db["news"]
-
-
-# MongoDB find, Search function
-# see Index function on MongoDB: https://docs.mongodb.org/v3.0/core/index-text/
-# see Text Search no MongoDB: https://docs.mongodb.org/v3.0/tutorial/text-search-in-aggregation/
-
-# Simple case : search item's keyword stored on MongoDB with the keyword.
-keywordResult = collection.find({"keyword" : "NS"})
-
-for item in keywordResult:
-    print(item)
-
-# Simple case : search item's headline stored on MongoDB with the keyword.
-######### TO-DO ##############
-# text search or find function certain data with partial string keyword
-headlineResult = collection.find({"headline" : "NS"})
-
-
-##############################
-for item in headlineResult:
-    print(item)
+    def search(self, keyword):
+        print(keyword)
+        keywordResult = self.collection.find({"keyword" : keyword})
+        return keywordResult
+    
+if __name__ == "__main__":
+    findermoudle = finder()
+    result = findermoudle.search(sys.argv[1:])
+    
+    for item in result:
+       print(item)
