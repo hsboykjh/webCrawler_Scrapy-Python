@@ -21,10 +21,11 @@ class finder(object):
         db = connection[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
     # search keyword on mongoDB
-    def search(self, keyword):
-        print(keyword)
-        keywordResult = self.collection.find({"keyword" : keyword})
-        return keywordResult
+    def search(self, field , keyword):
+        # certain keyword search on "keyword" filed
+        Result = self.collection.find({ field :{"$regex":keyword[0],"$options":""}})
+        
+        return Result
     
 if __name__ == "__main__":
     
@@ -33,14 +34,23 @@ if __name__ == "__main__":
         # instance of finder class
         findermoudle = finder()
         # search Keyword on MongoDB 
-        result = findermoudle.search(sys.argv[1:])
-    
+        keywordresult = findermoudle.search("keyword", sys.argv[1:])    
         # result print
-        for item in result:
+        print("############# KEYWORD SEARCH ############")
+        for item in keywordresult:
            print(item)
         
-        # TO-DO if the ohter search on the URL or content's text
-        # ADD HERE THE CODE
+        headlineresult = findermoudle.search("headline", sys.argv[1:])
+        # result print
+        print("############# HEADLINE SEARCH ############")
+        for item in headlineresult:
+           print(item)
+        
+        article_textresult = findermoudle.search("article_text", sys.argv[1:])
+        print("############# ARTICLE TEXT SEARCH ############")
+        for item in article_textresult:
+           print(item)
+        
            
     else:
         print("#########################################################")

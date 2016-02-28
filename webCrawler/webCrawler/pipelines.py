@@ -38,13 +38,9 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         
-        ###### To-do Duplicate item check ######
-        
-        ########################################
-        
-        
         # insert item into MongoDB
-        self.collection.insert({'keyword' : item['keyword'] , 'headline' : item['headline'] , 'article_url' : item['article_url'] , 'article_text' : item['article_text']})
+        # use update ( upsert option ) in order to prevent storing duplicated items
+        self.collection.update({'keyword' : item['keyword'] , 'headline' : item['headline'] , 'article_url' : item['article_url'] , 'article_text' : item['article_text']}, dict(item) , upsert = True)
 
         #logging.info("PIPELINES ITEM info : %s || %s || %s || %s" , item['article_url'],item['article_text'],item['keyword'],item['headline'])
         
